@@ -68,7 +68,8 @@ export default function ListaEmpresa(propsLista) {
         dispatch(initialPushQuestao({ user: propsLista.tipo === "resposta" ? userId : undefined }));
     }, [propsLista])
     const isLoading = useSelector(state => state.questao.isLoading)
-    const questionarios = useSelector(state => state.questao.questionario.questionarioDados)
+    const questionarios = useSelector(state => { console.log('state que eu quero', state.questao.questionario.questionarioDados); return state.questao.questionario.questionarioDados })
+    console.log('questionarios:', questionarios.length )
     const upaAPrimeira = texto => texto[0].toUpperCase() + texto.slice(1)
 
 
@@ -78,7 +79,7 @@ export default function ListaEmpresa(propsLista) {
         setSelect(null)
     }
 
-    const columns = isLoading ? null : questionarios
+    const columns = !questionarios.length > 0 ? null : questionarios
         ? Object.keys(questionarios[0]).map(key => ({
             title: upaAPrimeira(key),
             field: key,
@@ -110,7 +111,7 @@ export default function ListaEmpresa(propsLista) {
             </div>
             {isLoading
                 ? <CircularProgress className={classes.loading} />
-                : !questionarios ? ''
+                : !questionarios.length > 0 ? ''
                     : <TableContainer>
                         <Table>
                             <TableHead>

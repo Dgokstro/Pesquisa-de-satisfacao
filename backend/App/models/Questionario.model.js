@@ -117,10 +117,9 @@ Questionario.resposta = async (questionario, result) => {
 
 Questionario.getAll = (user, result) => {
 
-    const select = user
-        ? `select a.* from questionario_dados a `
+    const select =  `select a.* from questionario_dados a `
         // where id not in (select questionario from questionario_respondido where questionario = a.id and usuario =${user} )
-        : "SELECT a.*, count(b.id) as respondidos FROM questionario_dados a inner join questionario_respondido b on (a.id=b.questionario) group by a.id"
+        // : "SELECT a.*, count(b.id) as respondidos FROM questionario_dados a inner join questionario_respondido b on (a.id=b.questionario) group by a.id"
 
     console.log(user ? "tem usuario" : "nao tem usuario")
     sql.query(select, (err, res) => {
